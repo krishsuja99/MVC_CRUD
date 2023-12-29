@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="jobFairApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Fair Registration Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="~/script/employee.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        a
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .delete-button:hover {
+                background-color: #d32f2f;
+            }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+            .pagination li {
+                cursor: pointer;
+                margin: 0 5px;
+                padding: 5px 10px;
+                border: 1px solid #ddd;
+                background-color: #f8f8f8;
+            }
+
+                .pagination li.active {
+                    background-color: #4CAF50;
+                    color: white;
+                }
+    </style>
+</head>
+<body ng-controller="JobFairController">
+
+    <h2>Job Fair Registration Form</h2>
+    <div>
+    <form id="jobFairForm" ng-submit="submitForm()">
+
+        <label for="name">Name *</label>
+        <input type="text" id="Name" ng-model="formData.Name" required>
+
+
+        <label>Gender *</label>
+        <input type="radio" name="Gender" value="male" ng-model="formData.Gender" required> Male
+        <input type="radio" name="Gender" value="female" ng-model="formData.Gender" required> Female
+        <input type="radio" name="Gender" value="other" ng-model="formData.Gender" required> Other
+
+
+        <label for="email">Email *</label>
+        <input type="email" id="email" ng-model="formData.Email" required>
+
+
+        <label for="address">Address</label>
+        <input type="text" id="address" ng-model="formData.Address">
+
+
+        <label for="experience">Previous Years of Experience</label>
+        <input type="number" id="experience" ng-model="formData.Experience">
+
+
+        <label for="AreaofInterest">Area of Interest *</label>
+        <select id="AreaofInterest" ng-model="formData.AreaofInterest" required>
+            <option value="" disabled selected>Select Anyone</option>
+            <option value="IT Industry">IT Industry</option>
+            <option value="Accounts">Accounts</option>
+            <option value="BPO">BPO</option>
+            <option value="Designer">Designer</option>
+
+        </select>
+
+        <button type="submit">Submit</button>
+        <button type="button" ng-click="clearForm()">Clear</button>
+
+    </form>
+    </div>
+    <div>
+        <div class="input-group mb-2">
+            <input type="text" class="form-control" placeholder="Search Name & Address" aria-label="Recipient's username" aria-describedby="button-addon2" ng-model="searchName">
+            <button style="width: 80px !important;height: 42px !important;" class="btn btn-primary" type="button" id="button-addon2" ng-click="searchEmployee(searchName)">
+                Button
+            </button>
+        </div>
+        <table ng-show="applicants.length>0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Experience</th>
+                    <th>AreaofInterest</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="applicant in applicants">
+                    <td>{{applicant.name}}</td>
+                    <td>{{applicant.gender}}</td>
+                    <td>{{applicant.email}}</td>
+                    <td>{{applicant.address}}</td>
+                    <td>{{applicant.experience}}</td>
+                    <td>{{applicant.areaofInterest}}</td>
+                    <td>
+                        <button class="delete-button" ng-click="deleteApplicant(applicant.jobId)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  
+</body>
+</html>
+
+
+
